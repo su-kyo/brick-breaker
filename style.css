@@ -1,0 +1,296 @@
+/* 기본 색상 팔레트 */
+:root {
+  --main-bg: #e8eff5;
+  --header-bg: #30363c;
+  --brick1: #fe888f;
+  --brick2: #f79c07;
+  --brick3: #ffcc01;
+  --brick4: #25d0ae;
+  --brick5: #4d73f9;
+  --pad: #30363c;
+  --ball: #d63f72;
+  --life-on: #1fd5af;
+  --life-off: #d9d9d9;
+  --button-bg: #cb78ed;
+  --button-text: #fff;
+  --modal-bg: #fff;
+  --modal-overlay: rgba(0,0,0,0.8);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--main-bg);
+  font-family: 'Noto Sans KR', 'Chivo Mono', monospace, sans-serif;
+}
+
+.screen {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.screen.active {
+  display: flex;
+}
+
+.title {
+  font-size: 128px;
+  font-weight: 900;
+  color: #000;
+  margin-bottom: 48px;
+}
+
+.main-btn {
+  width: 300px;
+  height: 109px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  font-size: 64px;
+  font-weight: 900;
+  border: none;
+  border-radius: 32px;
+  cursor: pointer;
+  margin-top: 24px;
+}
+
+.top-ui {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 134px;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: var(--header-bg);
+  padding: 24px 48px;
+  gap: 12px;
+  box-sizing: border-box;
+}
+
+#game-screen {
+  padding: 32px 0 0 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+.info-box {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  padding: 16px 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-width: 120px;
+  min-height: 70px;
+  box-sizing: border-box;
+  margin-right: 8px;
+  gap: 12px;
+  flex-shrink: 1;
+  overflow: hidden;
+}
+
+.label {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--header-bg);
+  margin-right: 8px;
+  vertical-align: middle;
+  line-height: 1;
+  white-space: nowrap;
+}
+.value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #b0b8c1;
+  margin-top: 0;
+  vertical-align: middle;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#life {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+#life .life-dot {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--life-on);
+  margin-right: 4px;
+  vertical-align: middle;
+}
+#life .life-dot:last-child {
+  margin-right: 0;
+}
+
+#game-canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin-top: 120px;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 0 0 32px 0;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#game-canvas {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  display: block;
+  max-width: 1600px;
+  width: 100vw;
+  height: auto;
+  aspect-ratio: 4/3;
+  max-height: 80vh;
+  min-width: 320px;
+  min-height: 240px;
+}
+
+/* 모달 스타일 */
+.modal {
+  display: none;
+  position: fixed;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: var(--modal-overlay);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal.active {
+  display: flex;
+}
+.modal-content {
+  background: var(--modal-bg);
+  border-radius: 48px;
+  width: 640px;
+  padding: 48px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.modal-title {
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--header-bg);
+  margin-bottom: 24px;
+}
+.modal-score {
+  background: #e8eff5;
+  border-radius: 24px;
+  width: 472px;
+  height: 175px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 120px;
+  font-weight: 900;
+  color: var(--brick5);
+  margin-bottom: 16px;
+}
+.score-unit {
+  font-size: 48px;
+  color: var(--header-bg);
+  margin-left: 8px;
+}
+.score-grade {
+  font-size: 32px;
+  color: var(--header-bg);
+  margin-bottom: 32px;
+  text-align: center;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+.modal-buttons {
+  display: flex;
+  gap: 24px;
+}
+.main-btn, .modal-btn, .top-btn {
+  width: 200px;
+  height: 70px;
+  background: var(--button-bg);
+  color: var(--button-text);
+  font-size: 32px;
+  font-weight: 900;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.main-btn:hover, .modal-btn:hover, .top-btn:hover {
+  background: #a05dc7;
+}
+.main-btn:active, .modal-btn:active, .top-btn:active {
+  background: #7a3fa3;
+}
+
+.top-ui .top-buttons {
+  display: flex;
+  gap: 16px;
+  margin-left: auto;
+}
+.top-ui .top-btn {
+  width: 150px;
+  height: 70px;
+  background: var(--button-bg) !important;
+  color: var(--button-text);
+  font-size: 32px;
+  font-weight: 900;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.top-ui .top-btn:hover {
+  background: #a05dc7 !important;
+}
+.top-ui .top-btn:active {
+  background: #7a3fa3 !important;
+}
+
+/* 벽돌, 패들, 공 등은 canvas에서 그리므로 별도 스타일 없음 */
+
+@media (max-width: 1700px) {
+  #game-canvas-container { max-width: 100vw; }
+  #game-canvas { max-width: 100vw; }
+}
+@media (max-width: 1400px) {
+  #game-canvas-container { max-width: 100vw; }
+}
+@media (max-width: 900px) {
+  .title { font-size: 64px; }
+  .main-btn { font-size: 32px; height: 64px; }
+  .top-ui { flex-wrap: wrap; height: auto; padding: 16px 8px; position: fixed; }
+  .info-box { min-width: 80px; font-size: 16px; padding: 6px 8px; }
+  .label, .value { font-size: 18px; }
+  #life .life-dot { width: 18px; height: 18px; }
+  .top-ui .top-btn { font-size: 18px; height: 48px; width: 90px; }
+  #game-canvas-container { margin-top: 80px; max-width: 100vw; }
+  #game-canvas { width: 99vw; aspect-ratio: 4/3; max-height: 50vh; }
+  .modal-content { width: 90vw; padding: 16px 4px; }
+}
+@media (max-width: 600px) {
+  .title { font-size: 24px; }
+  .main-btn { font-size: 14px; height: 32px; }
+  .top-ui { flex-direction: column; gap: 6px; padding: 4px 1px; position: fixed; }
+  .info-box { min-width: 40px; font-size: 10px; padding: 1px 2px; }
+  .label, .value { font-size: 10px; }
+  #life .life-dot { width: 8px; height: 8px; }
+  .top-ui .top-btn { font-size: 10px; height: 24px; width: 40px; padding: 0 2px; }
+  #game-canvas-container { margin-top: 40px; max-width: 100vw; }
+  #game-canvas { width: 99vw; aspect-ratio: 4/5; max-height: 60vh; min-width: 0; min-height: 120px; }
+  .modal-content { width: 98vw; padding: 4px 1px; }
+} 
